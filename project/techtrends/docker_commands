@@ -1,0 +1,7 @@
+# Docker commands for TechTrends application
+
+# Run the Docker container
+docker run -d --name techtrends_ao -p 7111:3111 techtrends_ao
+
+# Retrieve logs from the Docker container
+docker logs techtrends_ao
