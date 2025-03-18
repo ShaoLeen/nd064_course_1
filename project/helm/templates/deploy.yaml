@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}  # Name of the deployment, using the release name
+  namespace: {{ .Values.namespace }}  # Namespace from values.yaml
+spec:
+  replicas: {{ .Values.replicaCount }}  # Number of replicas
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}  # Match labels for the pods
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}  # Labels for the pod
+    spec:
+      containers:
+        - name: {{ .Release.Name }}  # Name of the container
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  # Image from values.yaml
+          ports:
+            - containerPort: {{ .Values.containerPort }}  # Container port from values.yaml
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}  # Memory request from values.yaml
+              cpu: {{ .Values.resources.requests.cpu }}  # CPU request from values.yaml
+            limits:
+              memory: {{ .Values.resources.limits.memory }}  # Memory limit from values.yaml
+              cpu: {{ .Values.resources.limits.cpu }}  # CPU limit from values.yaml
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}  # Liveness probe path from values.yaml
+              port: {{ .Values.containerPort }}  # Liveness probe port
+            initialDelaySeconds: 5  # Delay before starting the probe
+            periodSeconds: 10  # Frequency of the probe
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}  # Readiness probe path from values.yaml
+              port: {{ .Values.containerPort }}  # Readiness probe port
+            initialDelaySeconds: 5  # Delay before starting the probe
+            periodSeconds: 10  # Frequency of the probe
