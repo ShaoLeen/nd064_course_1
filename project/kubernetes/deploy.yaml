@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techtrends
+  namespace: sandbox  # Specify the namespace
+spec:
+  replicas: 1  # Number of replicas
+  selector:
+    matchLabels:
+      app: techtrends  # Label to match the pods
+  template:
+    metadata:
+      labels:
+        app: techtrends  # Label for the pod
+    spec:
+      containers:
+        - name: techtrends
+          image: techtrends_ao:latest  # Docker image to use
+          ports:
+            - containerPort: 3111  # Port the container listens on
+          resources:
+            requests:
+              cpu: "250m"  # CPU request
+              memory: "64Mi"  # Memory request
+            limits:
+              cpu: "500m"  # CPU limit
+              memory: "128Mi"  # Memory limit
+          livenessProbe:
+            httpGet:
+              path: /healthz  # Path for the liveness probe
+              port: 3111  # Port for the liveness probe
+            initialDelaySeconds: 5  # Delay before the probe starts
+            periodSeconds: 10  # Frequency of the probe
+          readinessProbe:
+            httpGet:
+              path: /healthz  # Path for the readiness probe
+              port: 3111  # Port for the readiness probe
+            initialDelaySeconds: 5  # Delay before the probe starts
+            periodSeconds: 10  # Frequency of the probe
