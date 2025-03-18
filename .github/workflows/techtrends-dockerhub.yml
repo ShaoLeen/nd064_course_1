@@ -25,5 +25,5 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push alexanderolschok/techtrends_ao:V1.0.0
+          docker push alexanderolschok/techtrends_ao:latest
 
