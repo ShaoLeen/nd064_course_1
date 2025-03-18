@@ -1,0 +1,9 @@
+apiVersion: v2  # Use v2 for Helm 3 and above
+name: techtrends
+description: A Helm chart for deploying the TechTrends application
+keywords:
+  - techtrends
+version: 1.0.0
+appVersion: "1.0.0"  # Optional: The version of the application being deployed
+maintainers:
+  - name: Alexander Olschok  # Replace with your name
