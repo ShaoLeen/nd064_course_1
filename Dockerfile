@@ -1,8 +1,8 @@
 FROM python:3.8
 LABEL maintainer="Alexander Olschok"
 
-COPY . /project/techtrends
-WORKDIR /project/techtrends
+COPY . /project
+WORKDIR /project
 RUN pip install -r requirements.txt
 
 EXPOSE 3111
