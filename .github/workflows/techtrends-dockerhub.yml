@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t alexanderolschok/techtrends_ao:V1.0.0 .
+          docker build -t alexanderolschok/techtrends_ao:latest .
 
       - name: Push Docker image
         run: |
