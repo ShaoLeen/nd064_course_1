@@ -51,20 +51,6 @@ def get_post_count():
 
         connection.close()
 
-def get_article_titles():
-    connection = get_db_connection()
-    cursor = connection.cursor()
-
-    # Query to retrieve all article titles
-    cursor.execute("SELECT title FROM posts")  # Replace 'posts' with your actual table name
-    titles = cursor.fetchall()  # Fetch all titles
-
-    connection.close()
-
-    # Extract titles from the fetched rows
-    return [title['title'] for title in titles]
-
-
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -81,15 +67,28 @@ def index():
 # If the post ID is not found a 404 page is shown
 @app.route('/<int:post_id>')
 def post(post_id):
-    post = get_post(post_id)
-    if post is None:
-      return render_template('404.html'), 404
-    else:
-      return render_template('post.html', post=post)
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Query to retrieve the article by ID
+    cursor.execute("SELECT title, content FROM posts WHERE id = ?", (post_id,))
+    article = cursor.fetchone()
+
+    # Check if the article exists
+    if article is None:
+        app.logger.warning("Article %d not found", post_id)  # Log a warning if the article is not found
+        return render_template('404.html'), 404  # Render a 404 page
+
+    title = article['title']
+    app.logger.info("Article retrieved: %s", title)  # Log the title of the retrieved article
+
+    # Render the post template with the retrieved article data
+    return render_template('post.html', post=article)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    app.logger.info("About Us page retrieved")
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -108,6 +107,8 @@ def create():
         connection.commit()
         connection.close()
 
+        app.logger.info("New article created: %s", title)
+      
         return redirect(url_for('index'))
 
     return render_template('create.html')
