@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: techtrends
-          image: techtrends_ao:latest  # Docker image to use
+          image: alexanderolschok/techtrends_ao:latest  # Docker image to use
           ports:
             - containerPort: 3111  # Port the container listens on
           resources:
