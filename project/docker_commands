@@ -1,5 +1,8 @@
 # Docker commands for TechTrends application
 
+# Build the Docker image with a tag
+docker build -t techtrends_ao:latest .
+
 # Run the Docker container
 docker run -d --name techtrends_ao -p 7111:3111 techtrends_ao
 
