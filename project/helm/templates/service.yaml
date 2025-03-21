@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}  # Name of the service, using the release name
-  namespace: {{ .Values.namespace }}  # Namespace from values.yaml
+  namespace: {{ .Values.namespace.name }}  # Namespace from values.yaml
 spec:
   type: {{ .Values.service.type }}  # Service type (e.g., ClusterIP, NodePort)
   ports:
