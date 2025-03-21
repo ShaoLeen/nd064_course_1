@@ -3,7 +3,7 @@ LABEL maintainer="Alexander Olschok"
 
 WORKDIR /project/techtrends
 COPY . .
-RUN pip install -r requirements.txt&&python init_db.py
+RUN pip install -r requirements.txt && python init_db.py
 
 EXPOSE 3111
 
