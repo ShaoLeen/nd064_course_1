@@ -1,4 +1,4 @@
-apiVersion: v2  # Use v2 for Helm 3 and above
+apiVersion: v1  # Use v2 for Helm 3 and above
 name: techtrends
 description: A Helm chart for deploying the TechTrends application
 keywords:
