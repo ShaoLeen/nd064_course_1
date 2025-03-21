@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: techtrends # Name of the deployment, using the release name
+  name: {{ .Release.Name }} # Name of the deployment, using the release name
   namespace: {{ .Values.namespace.name }}  # Namespace from values.yaml
 spec:
   replicas: {{ .Values.replicaCount }}  # Number of replicas
