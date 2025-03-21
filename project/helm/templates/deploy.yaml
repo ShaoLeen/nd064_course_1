@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}  # Name of the deployment, using the release name
+  name: {{ .Release.Name }}-deployment  # Name of the deployment, using the release name
   namespace: {{ .Values.namespace }}  # Namespace from values.yaml
 spec:
   replicas: {{ .Values.replicaCount }}  # Number of replicas
