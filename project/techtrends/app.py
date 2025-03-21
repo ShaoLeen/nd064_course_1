@@ -94,24 +94,28 @@ def about():
 # Define the post creation functionality 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
+    title = None  # Initialize title to avoid potential reference before assignment
+    content = None  # Initialize content to avoid potential reference before assignment
+
     if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
+        title = request.form.get('title')  # Use .get() to avoid KeyError
+        content = request.form.get('content')  # Use .get() to avoid KeyError
 
-    if not title:
-        flash('Title is required!')
-    else:
-        connection = get_db_connection()
-        connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
-                     (title, content))
-        connection.commit()
-        connection.close()
+        if not title:
+            flash('Title is required!')  # Flash message for missing title
+            return render_template('create.html')  # Render the template again to show the error
+        else:
+            connection = get_db_connection()
+            connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
+                               (title, content))
+            connection.commit()
+            connection.close()
 
-        app.logger.info("New article created: %s", title)
-      
-        return redirect(url_for('index'))
+            app.logger.info("New article created: %s", title)  # Log the creation of the new article
 
-    return render_template('create.html')
+            return redirect(url_for('index'))  # Redirect to the index page after successful creation
+
+    return render_template('create.html') 
 
 # Define metrics 
 @app.route('/status')
