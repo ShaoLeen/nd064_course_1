@@ -1,9 +1,9 @@
 FROM python:3.12
 LABEL maintainer="Alexander Olschok"
 
-COPY . .
 WORKDIR /project/techtrends
-RUN pip install -r requirements.txt
+COPY . .
+RUN pip install -r requirements.txt&&python3 init_db.py
 
 EXPOSE 3111
 
