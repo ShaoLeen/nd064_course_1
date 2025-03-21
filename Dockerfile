@@ -2,7 +2,8 @@ FROM python:3.12
 LABEL maintainer="Alexander Olschok"
 
 WORKDIR /project/techtrends
-COPY . .
+COPY /project/techtrends
+
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 RUN python3 init_db.py
